@@ -53,7 +53,6 @@ namespace Dmitriy_Vysotskyy
         [OneTimeTearDown]
         public void EndTest()
         {
-            _driver.Close();
             _driver.Quit();
         }
     }
