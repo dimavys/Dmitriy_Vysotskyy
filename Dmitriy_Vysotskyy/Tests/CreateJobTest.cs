@@ -1,38 +1,30 @@
 ﻿using System;
+using System.Threading;
+using Dmitriy_Vysotskyy.PageObjects;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using Dmitriy_Vysotskyy.PageObjects;
-using System.Threading;
 
-namespace Dmitriy_Vysotskyy
+namespace Dmitriy_Vysotskyy.Tests
 {
-    public class Sample
-    {
+	public class CreateJobTest
+	{
         private IWebDriver _driver = new ChromeDriver();
 
-        private string _jobTitleListUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewJobTitleList";
-
-        [OneTimeSetUp]
+        [SetUp]
         public void Initialize()
         {
             var loginPage = new LoginPage(_driver);
             loginPage.Navigate();
             loginPage.Login("Admin", "admin123");
-        }
 
-        [Test, Order(1)]
-        public void GoToJobList_ValidEndUrl_ShouldGetDestSuccessfully()
-        {
             var homePage = new HomePage(_driver);
             UserManagementPage userManagementPage = homePage.GoToAdminModule();
             userManagementPage.OpenChoices();
             JobTitlesPage jobTitlesPage = userManagementPage.GoToJobTitles();
-
-            Assert.AreEqual(_driver.Url, _jobTitleListUrl);
         }
 
-        [Test, Order(2)]
+        [Test]
         public void InsertJob_ValidJobTitleAndJobDesc_ShouldCreateSuccessfully()
         {
             var jobTitlesPage = new JobTitlesPage(_driver);
@@ -42,19 +34,14 @@ namespace Dmitriy_Vysotskyy
             Assert.IsTrue(jobTitlesPage.CheckJobExistance("Driver"));
         }
 
-        [Test, Order(3)]
-        public void DeleteJob_FoundJob_ShouldDeletedSuccessfully()
+        [TearDown]
+        public void EndTest()
         {
             var jobTitlesPage = new JobTitlesPage(_driver);
             jobTitlesPage.DeleteJob("Driver");
-
-            Assert.IsFalse(jobTitlesPage.CheckJobExistance("Driver"));
-        }
-
-        [OneTimeTearDown]
-        public void EndTest()
-        {
             _driver.Quit();
         }
+
     }
 }
+

@@ -61,13 +61,14 @@ namespace Dmitriy_Vysotskyy.PageObjects
 
         public void DeleteJob(string jobName)
         {
-            IWebElement btnDelete = _driver.FindElement(By.XPath("//div[text()='Driver']/parent::div/parent::div/parent::div//button[1]"));
+            _wait.Until(ExpectedConditions.ElementExists(By.XPath("//*[@class='orangehrm-bottom-container']")));
+
+            IWebElement btnDelete = _driver.FindElement(By.XPath("//div[text()='" + jobName + "']/parent::div/parent::div/parent::div//button[1]"));
             btnDelete.Click();
             _wait.Until(ExpectedConditions.ElementExists(By.XPath("//p[text()='Are you Sure?']")));
 
             IWebElement btnYesDelete = _driver.FindElement(By.XPath("//button[text()=' Yes, Delete ']"));
             btnYesDelete.Click();
-            Thread.Sleep(10000);
         }
     }
 }

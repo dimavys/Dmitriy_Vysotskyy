@@ -1,48 +1,32 @@
 ﻿using System;
+using Dmitriy_Vysotskyy.PageObjects;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using Dmitriy_Vysotskyy.PageObjects;
-using System.Threading;
 
-namespace Dmitriy_Vysotskyy
+namespace Dmitriy_Vysotskyy.Tests
 {
-    public class Sample
-    {
+	public class DeleteJobTest
+	{
         private IWebDriver _driver = new ChromeDriver();
 
-        private string _jobTitleListUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewJobTitleList";
-
-        [OneTimeSetUp]
+        [SetUp]
         public void Initialize()
         {
             var loginPage = new LoginPage(_driver);
             loginPage.Navigate();
             loginPage.Login("Admin", "admin123");
-        }
 
-        [Test, Order(1)]
-        public void GoToJobList_ValidEndUrl_ShouldGetDestSuccessfully()
-        {
             var homePage = new HomePage(_driver);
             UserManagementPage userManagementPage = homePage.GoToAdminModule();
             userManagementPage.OpenChoices();
+
             JobTitlesPage jobTitlesPage = userManagementPage.GoToJobTitles();
-
-            Assert.AreEqual(_driver.Url, _jobTitleListUrl);
-        }
-
-        [Test, Order(2)]
-        public void InsertJob_ValidJobTitleAndJobDesc_ShouldCreateSuccessfully()
-        {
-            var jobTitlesPage = new JobTitlesPage(_driver);
             AddJobTitlePage addJobTitlePage = jobTitlesPage.GoToAddTitle();
             jobTitlesPage = addJobTitlePage.InsertTheJob("Driver", "This is desc of driver", "This is a note of driver");
-
-            Assert.IsTrue(jobTitlesPage.CheckJobExistance("Driver"));
         }
 
-        [Test, Order(3)]
+        [Test]
         public void DeleteJob_FoundJob_ShouldDeletedSuccessfully()
         {
             var jobTitlesPage = new JobTitlesPage(_driver);
@@ -51,10 +35,11 @@ namespace Dmitriy_Vysotskyy
             Assert.IsFalse(jobTitlesPage.CheckJobExistance("Driver"));
         }
 
-        [OneTimeTearDown]
+        [TearDown]
         public void EndTest()
         {
             _driver.Quit();
         }
     }
 }
+
