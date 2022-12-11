@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.PageObjects;
@@ -12,10 +13,6 @@ namespace Dmitriy_Vysotskyy.PageObjects
         private IWebDriver _driver;
 
         private WebDriverWait _wait;
-
-        private string _deleteButtonXpathPart1 = "/html/body/div/div[1]/div[2]/div[2]/div/div/div[3]/div/div/div[";
-
-        private string _deleteButtonXpathPart2 = "]/div/div/div[1]/div[2]/div/div/button[1]";
 
         public JobTitlesPage(IWebDriver driver)
         {
@@ -62,16 +59,15 @@ namespace Dmitriy_Vysotskyy.PageObjects
             return false;
         }
 
-        public JobTitlesPage DeleteJob(string jobName)
+        public void DeleteJob(string jobName)
         {
-            string jobXpath = "//*[text()='" + jobName + "']";
-            var textXpath = _driver.FindElement(By.XPath(jobXpath)).GetAttribute("xpath"); //doesn't work
-            string deleteButtonXpath = _deleteButtonXpathPart1 + GetElementPosition(textXpath).ToString() + _deleteButtonXpathPart2;
+            IWebElement btnDelete = _driver.FindElement(By.XPath("//div[text()='Driver']/parent::div/parent::div/parent::div//button[1]"));
+            btnDelete.Click();
+            _wait.Until(ExpectedConditions.ElementExists(By.XPath("//p[text()='Are you Sure?']")));
 
-            IWebElement deleteButton = _driver.FindElement(By.XPath(deleteButtonXpath));
-            deleteButton.Click();
-
-            return new JobTitlesPage(_driver);
+            IWebElement btnYesDelete = _driver.FindElement(By.XPath("//button[text()=' Yes, Delete ']"));
+            btnYesDelete.Click();
+            Thread.Sleep(10000);
         }
     }
 }
