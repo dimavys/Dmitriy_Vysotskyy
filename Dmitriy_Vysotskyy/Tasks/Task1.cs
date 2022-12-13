@@ -7,11 +7,13 @@ namespace Dmitriy_Vysotskyy.Tasks
 	{
        public static List<object> GetIntegersFromList(List<object> inputList)
        {
-            foreach (var item in inputList)
-                if (item.GetType() != typeof(System.Int32))
-                    inputList.Remove(item);
+            var outputList = new List<object>();
 
-            return inputList;
+            foreach (var item in inputList)
+                if (item.GetType() == typeof(System.Int32))
+                    outputList.Add(item);
+
+            return outputList;
        }
     }
 }
