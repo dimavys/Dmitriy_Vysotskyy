@@ -12,12 +12,4 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Tests\" />
-    <None Remove="Tasks\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tests\" />
-    <Folder Include="Tasks\" />
-  </ItemGroup>
 </Project>
