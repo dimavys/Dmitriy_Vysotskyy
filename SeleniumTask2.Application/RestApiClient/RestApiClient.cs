@@ -7,10 +7,14 @@ using SeleniumTask2.Application.Interfaces;
 using SeleniumTask2.Application.Constants;
 using SeleniumTask2.Application.RequestBuilder;
 using System.Net.Mime;
+using SeleniumTask2.Application.Responses;
+using System.Text.Json.Serialization;
+using Json.Net;
+using System.Security.Principal;
 
 namespace SeleniumTask2.Application.RestApiClient
 {
-    public class RestApiClient : IRestApiClient
+    public class RestApiClient 
     {
         readonly RestClient _client;
 
@@ -20,26 +24,28 @@ namespace SeleniumTask2.Application.RestApiClient
 
             _client = new RestClient(options)
             {
+
             };
 
-            _client.AddDefaultHeader("Authorization", "Bearer sl.BVLq7o9FmVyh3vq1b0UvTSR5VQJZTOJs9TvBuUVgHf_Wx2YirB9rp21nZAnmxvg7ZNY-MZzqPYquwcU96pxRvaUSryb9igSKeHLkYAaSkvZDpHleYuXHvJI4mlUp6k71rpx_nwNHdYqo");
+            _client.AddDefaultHeader("Authorization", RouteConstants.GeneratedToken);
         }
 
-        public async Task<string> GetFileMetadata(string fileId)
+        public async Task<FileMetaData> GetFileMetadata(string filePath, CancellationToken token)
         {
-            var request = new RestRequest(RouteConstants.GetMetaDataUrl);
+            var request = RequestBuilder.RequestBuilder.GetRequest(new GetFileMetaDataRequest(filePath));
 
-            request.AddHeader("Authorization", "Basic dXY1cHZtY3RkcmZyNnJpOmN6ZmYydjZ1ejg3eTRlNg==");
-            request.AddHeader("Content-Type", "application/json");
-            //var json = "{ \"include_deleted\": \"false\", \"include_has_explicit_shared_members\": \"false\", \"include_media_info\": \"false\", \"path\": \"/file.txt\"}";
-            //request.AddStringBody(json, DataFormat.Json);
+            var response = new RestResponse();
 
-            request.RequestFormat = DataFormat.Json;
-            request.AddJsonBody(new { include_deleted = "false", include_has_explicit_shared_members = "false", include_media_info = "false", path = "/file.txt" });
+            try
+            {
+                response = await _client.ExecutePostAsync(request, token);
+            }
+            catch(OperationCanceledException)
+            {
+                Console.WriteLine("The request was terminated");
+            }
 
-            var response = await _client.GetAsync(request);
-            return response.Content;
-
+            return new JsonConverter.DeserializeObject<FileMetaData>(response.Content);
         }
 
         public async Task<string> UploadFile(string localFilePath, CancellationToken token)

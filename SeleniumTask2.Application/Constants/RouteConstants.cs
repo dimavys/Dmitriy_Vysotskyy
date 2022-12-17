@@ -9,7 +9,7 @@ namespace SeleniumTask2.Application.Constants
 
 		public static readonly string TokenType = "Bearer";
 
-		public static readonly string GeneratedToken = "sl.BVAHwRNTN-pLdXkQG1swUfjQHn6nc3juRAs2HT9bPj46MgO8dOAVtikD_rX6VFxZrrtTdhDN-cFOUTydXg6M_koRQVU8p0zS_OQTF29mIIjm9EmLV3F0qN5BXSPAEWz_e9Xqx2j7nYpy";
+		public static readonly string GeneratedToken = "sl.BVIAGWwmlcnXz81M1okRCJQQa6NosTIv8_k8_euLjP18eyuATVVn8IXSA08hG8BeyDCmRCEGQYxOrygJKY-bT5fp6jSM-Ea6v4I_f_Tnkd2YHyG1ixfvVQl7TH79BpxrVoCqO_gsOlyl";
 
 
 		public static readonly string DropBoxApiArgValue = "{\"mode\":\"add\",\"path\":\"/TestFolder/file.txt\"}";

@@ -19,6 +19,9 @@
     <None Remove="RestApiClient\Common\" />
     <None Remove="Constants\" />
     <None Remove="RequestBuilder\" />
+    <None Remove="Responses\" />
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Json.Net" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
@@ -27,8 +30,10 @@
     <Folder Include="RestApiClient\Common\" />
     <Folder Include="Constants\" />
     <Folder Include="RequestBuilder\" />
+    <Folder Include="Responses\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="RestSharp" Version="108.0.3" />
+    <PackageReference Include="Json.Net" Version="1.0.33" />
   </ItemGroup>
 </Project>

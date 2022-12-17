@@ -17,7 +17,7 @@ namespace SeleniumTask2.Tests
         [Test]
         public async Task Test1()
         {
-           var result = await _restClient.GetFileMetadata("file.txt");
+           var result = await _restClient.GetFileMetadata("/file.txt");
 
             Assert.Pass();
         }
