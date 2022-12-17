@@ -6,6 +6,7 @@ using SeleniumTask2.Application.RestApiClient.Common;
 using SeleniumTask2.Application.Interfaces;
 using SeleniumTask2.Application.Constants;
 using SeleniumTask2.Application.RequestBuilder;
+using System.Net.Mime;
 
 namespace SeleniumTask2.Application.RestApiClient
 {
@@ -13,19 +14,28 @@ namespace SeleniumTask2.Application.RestApiClient
     {
         readonly RestClient _client;
 
-        public RestApiClient(string apiKey, string apiKeySecret)
+        public RestApiClient()
         {
             var options = new RestClientOptions("https://content.dropboxapi.com/2");
 
             _client = new RestClient(options)
             {
-                Authenticator = new AppAuthenticator("https://content.dropboxapi.com", apiKey, apiKeySecret)
             };
+
+            _client.AddDefaultHeader("Authorization", "Bearer sl.BVLq7o9FmVyh3vq1b0UvTSR5VQJZTOJs9TvBuUVgHf_Wx2YirB9rp21nZAnmxvg7ZNY-MZzqPYquwcU96pxRvaUSryb9igSKeHLkYAaSkvZDpHleYuXHvJI4mlUp6k71rpx_nwNHdYqo");
         }
 
-        public async Task<string> GetFile(string fileId)
+        public async Task<string> GetFileMetadata(string fileId)
         {
-            var request = new RestRequest(RouteConstants.GetMetaDataUrl + $"/{fileId}");
+            var request = new RestRequest(RouteConstants.GetMetaDataUrl);
+
+            request.AddHeader("Authorization", "Basic dXY1cHZtY3RkcmZyNnJpOmN6ZmYydjZ1ejg3eTRlNg==");
+            request.AddHeader("Content-Type", "application/json");
+            //var json = "{ \"include_deleted\": \"false\", \"include_has_explicit_shared_members\": \"false\", \"include_media_info\": \"false\", \"path\": \"/file.txt\"}";
+            //request.AddStringBody(json, DataFormat.Json);
+
+            request.RequestFormat = DataFormat.Json;
+            request.AddJsonBody(new { include_deleted = "false", include_has_explicit_shared_members = "false", include_media_info = "false", path = "/file.txt" });
 
             var response = await _client.GetAsync(request);
             return response.Content;
