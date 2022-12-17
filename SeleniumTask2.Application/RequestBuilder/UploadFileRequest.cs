@@ -34,6 +34,12 @@ namespace SeleniumTask2.Application.RequestBuilder
             _restRequest.AddParameter("file", fileData, ParameterType.RequestBody);
         }
 
+        public void SetBody(string name, object value)
+        {
+            _restRequest.AddParameter(name, value, ParameterType.RequestBody);
+
+        }
+
         public override RestRequest GetRequest()
         {
             return _restRequest;

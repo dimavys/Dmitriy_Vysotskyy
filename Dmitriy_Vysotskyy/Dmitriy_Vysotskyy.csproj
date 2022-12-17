@@ -15,11 +15,5 @@
 
   <ItemGroup>
     <None Remove="RestSharp" />
-    <None Remove="File\" />
-    <None Remove="Configure\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="File\" />
-    <Folder Include="Configure\" />
   </ItemGroup>
 </Project>

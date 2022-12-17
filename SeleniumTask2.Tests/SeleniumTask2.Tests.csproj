@@ -12,4 +12,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SeleniumTask2.Application\SeleniumTask2.Application.csproj" />
+  </ItemGroup>
 </Project>

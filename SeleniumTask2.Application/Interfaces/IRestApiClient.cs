@@ -6,7 +6,7 @@ namespace SeleniumTask2.Application.Interfaces
 {
 	public interface IRestApiClient
 	{
-        Task<T> GetFile<T>(string user);
+        Task<string> GetFile(string user);
         Task<string> UploadFile(string localFilePath, CancellationToken token);
     }
 }

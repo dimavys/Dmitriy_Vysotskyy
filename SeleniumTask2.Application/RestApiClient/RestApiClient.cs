@@ -23,11 +23,13 @@ namespace SeleniumTask2.Application.RestApiClient
             };
         }
 
-        public async Task<T> GetFile<T>(string fileId)
+        public async Task<string> GetFile(string fileId)
         {
-            var response = await _client.GetJsonAsync<T>(RouteConstants.GetMetaDataUrl + "/{fieldId}"
-                ,new { fileId });
-            return response;
+            var request = new RestRequest(RouteConstants.GetMetaDataUrl + $"/{fileId}");
+
+            var response = await _client.GetAsync(request);
+            return response.Content;
+
         }
 
         public async Task<string> UploadFile(string localFilePath, CancellationToken token)
