@@ -6,17 +6,17 @@ using SeleniumTask2.Application.RestApiClient.Common;
 using SeleniumTask2.Application.Interfaces;
 using SeleniumTask2.Application.Constants;
 using SeleniumTask2.Application.RequestBuilder;
-using System.Net.Mime;
 using SeleniumTask2.Application.Responses;
+using System.Text.Json;
 using System.Text.Json.Serialization;
-using Json.Net;
 using System.Security.Principal;
+using System.IO;
 
 namespace SeleniumTask2.Application.RestApiClient
 {
     public class RestApiClient 
     {
-        readonly RestClient _client;
+        private readonly RestClient _client;
 
         public RestApiClient()
         {
@@ -27,65 +27,50 @@ namespace SeleniumTask2.Application.RestApiClient
 
             };
 
-            _client.AddDefaultHeader("Authorization", RouteConstants.GeneratedToken);
+            _client.AddDefaultHeader("Authorization", RouteConstants.TokenType+ " " + RouteConstants.GeneratedToken);
         }
 
-        public async Task<FileMetaData> GetFileMetadata(string filePath, CancellationToken token)
+        public async Task<FileMetaData> GetFileMetadata(string filePath)
         {
-            var request = RequestBuilder.RequestBuilder.GetRequest(new GetFileMetaDataRequest(filePath));
-
-            var response = new RestResponse();
-
-            try
-            {
-                response = await _client.ExecutePostAsync(request, token);
-            }
-            catch(OperationCanceledException)
-            {
-                Console.WriteLine("The request was terminated");
-            }
-
-            return new JsonConverter.DeserializeObject<FileMetaData>(response.Content);
-        }
-
-        public async Task<string> UploadFile(string localFilePath, CancellationToken token)
-        {
-            var request = new UploadFileRequest(localFilePath);
-            request.SetHeaders(); // can I add execution of these methods to constructor?
-            request.SetBody();
+            var request = new RequestBuilder.RequestBuilder()
+                .SetUrl(RouteConstants.GetMetaDataUrl)
+                .SetHeader("application/json")
+                .SetBody<object>(new { include_deleted = false, include_has_explicit_shared_members = false, include_media_info = false, path = filePath })
+                .Build();
+                
+            var response = await _client.ExecutePostAsync(request);
             
-            var response = new RestResponse();
-
-            try
-            {
-                response = await _client.PostAsync(request.GetRequest(), token);
-            }
-            catch(OperationCanceledException)
-            {
-                Console.WriteLine("The request was terminated");
-            }
-
-            return response.Content;
+            return JsonSerializer.Deserialize<FileMetaData>(response.Content);
         }
 
-        public async Task<string> DeleteFile(string filePath, CancellationToken token)
+        public async Task<FileMetaData> DeleteFile(string filePath)
         {
-            var request = new DeleteFileRequest(filePath);
-            request.SetHeaders(); // can I add execution of these methods to constructor?
-            request.SetBody();
+            var request = new RequestBuilder.RequestBuilder()
+                .SetUrl(RouteConstants.DeleteFileUrl)
+                .SetHeader("application/json")
+                .SetBody<object>(new { path = filePath })
+                .Build();
 
-            var response = new RestResponse();
+            var response = await _client.ExecutePostAsync(request);
 
-            try
-            {
-                response = await _client.DeleteAsync(request.GetRequest(), token);
-            }
-            catch (OperationCanceledException)
-            {
-                Console.WriteLine("The request was terminated");
-            }
+            return JsonSerializer.Deserialize<FileMetaData>(response.Content);
+        }
 
-            return response.Content;
+        public async Task<FilePostResponse> UploadFile(string localFilePath)
+        {
+            var request = new RequestBuilder.RequestBuilder()
+                .SetUrl(RouteConstants.UploadFileUrl)
+                .SetHeader("application/octet-stream")
+                .SetBody<object>(new { autorename = false, mode = "add", mute = false, path = "/file.txt", strict_conflict = false })
+                .Build();
+
+            byte[] fileData = File.ReadAllBytes(localFilePath);
+
+            request.AddParameter("file", fileData, ParameterType.RequestBody);
+
+            var response = await _client.ExecutePostAsync(request);
+
+            return JsonSerializer.Deserialize<FilePostResponse>(response.Content);
         }
 
         public void Dispose()

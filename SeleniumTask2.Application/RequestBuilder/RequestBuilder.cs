@@ -1,19 +1,36 @@
 ﻿using System;
 using RestSharp;
+using SeleniumTask2.Application.Constants;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace SeleniumTask2.Application.RequestBuilder
 {
-	public static class RequestBuilder
+	public class RequestBuilder
 	{
-		public static RestRequest GetRequest (GetFileMetaDataRequest metaRequest)
+		private RestRequest _restRequest;
+
+		public RequestBuilder SetUrl(string url)
 		{
-			var request = new RestRequest(Constants.RouteConstants.GetMetaDataUrl, Method.Post);
-			request.AddHeader("Content-Type", "application/json");
-            request.RequestFormat = DataFormat.Json;
-            request.AddJsonBody(new { include_deleted = false, include_has_explicit_shared_members = false, include_media_info = false, path = metaRequest.FilePath });
-			return request;
+			_restRequest = new RestRequest(url, Method.Post);
+			return this;
         }
+
+		public RequestBuilder SetHeader(string contentType)
+		{
+			_restRequest.AddHeader("Content-Type", contentType);
+            return this;
+        }
+
+		public RequestBuilder SetBody<T>(T body) where T : class
+		{
+			_restRequest.AddJsonBody(body);
+            return this;
+        }
+
+		public RestRequest Build()
+		{
+			return _restRequest;
+		}
     }
 }
 

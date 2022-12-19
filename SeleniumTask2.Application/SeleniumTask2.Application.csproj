@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <OutputType>Library</OutputType>
   </PropertyGroup>
 
@@ -22,6 +22,8 @@
     <None Remove="Responses\" />
     <None Remove="Newtonsoft.Json" />
     <None Remove="Json.Net" />
+    <None Remove="RestSharp.Newtonsoft.Json" />
+    <None Remove="RestSharp.Newtonsoft.Json.Extensions" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
@@ -34,6 +36,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="RestSharp" Version="108.0.3" />
-    <PackageReference Include="Json.Net" Version="1.0.33" />
+    <PackageReference Include="RestSharp.Newtonsoft.Json.Extensions" Version="1.0.4" />
   </ItemGroup>
 </Project>
