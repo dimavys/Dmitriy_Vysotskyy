@@ -3,7 +3,6 @@ using RestSharp;
 using System.Threading;
 using System.Threading.Tasks;
 using SeleniumTask2.Application.RestApiClient.Common;
-using SeleniumTask2.Application.Interfaces;
 using SeleniumTask2.Application.Constants;
 using SeleniumTask2.Application.RequestBuilder;
 using SeleniumTask2.Application.Responses;
