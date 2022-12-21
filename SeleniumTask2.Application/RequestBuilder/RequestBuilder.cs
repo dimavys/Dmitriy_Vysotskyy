@@ -16,12 +16,6 @@ namespace SeleniumTask2.Application.RequestBuilder
 			return this;
         }
 
-		public RequestBuilder SetHeader(string contentType)
-		{
-			_restRequest.AddHeader("Content-Type", contentType);
-            return this;
-        }
-
         public RequestBuilder SetHeader(string key, string value)
 		{
             _restRequest.AddHeader(key, value);

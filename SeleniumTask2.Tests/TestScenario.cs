@@ -5,17 +5,20 @@ namespace SeleniumTask2.Tests;
 
 public class Tests
 {
-    private RestApiClient _restClient = new RestApiClient();
+    private RestApiClient _restClient;
+
+    private readonly string _localFilePath = "/Users/mac/Desktop/file.txt";
 
     [OneTimeSetUp]
     public void Setup()
     {
+        _restClient = new RestApiClient();
     }
 
     [Test, Order(1)]
     public async Task TestUpload()
     {
-        var result = await _restClient.UploadFile("/Users/mac/Desktop/file.txt");
+        var result = await _restClient.UploadFile(_localFilePath);
 
         Assert.AreEqual(true, result.is_downloadable);
     }
