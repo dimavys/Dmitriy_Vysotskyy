@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Security.Principal;
 using System.IO;
+using System.Reflection.PortableExecutable;
 
 namespace SeleniumTask2.Application.RestApiClient
 {
@@ -33,7 +34,7 @@ namespace SeleniumTask2.Application.RestApiClient
         {
             var request = new RequestBuilder.RequestBuilder()
                 .SetUrl(RouteConstants.GetMetaDataUrl)
-                .SetHeader("application/json")
+                .SetHeader("Content-Type", "application/json")
                 .SetBody<object>(new { include_deleted = false, include_has_explicit_shared_members = false, include_media_info = false, path = filePath })
                 .Build();
                 
@@ -46,7 +47,7 @@ namespace SeleniumTask2.Application.RestApiClient
         {
             var request = new RequestBuilder.RequestBuilder()
                 .SetUrl(RouteConstants.DeleteFileUrl)
-                .SetHeader("application/json")
+                .SetHeader("Content-Type", "application/json")
                 .SetBody<object>(new { path = filePath })
                 .Build();
 
@@ -55,21 +56,18 @@ namespace SeleniumTask2.Application.RestApiClient
             return JsonSerializer.Deserialize<FileMetaData>(response.Content);
         }
 
-        public async Task<FilePostResponse> UploadFile(string localFilePath)
+        public async Task<FileMetaData> UploadFile(string localFilePath)
         {
             var request = new RequestBuilder.RequestBuilder()
                 .SetUrl(RouteConstants.UploadFileUrl)
-                .SetHeader("application/octet-stream")
-                .SetBody<object>(new { autorename = false, mode = "add", mute = false, path = "/file.txt", strict_conflict = false })
+                .SetHeader("Dropbox-API-Arg", "{\"path\":\"/file.txt\"}")
+                .SetHeader("Content-Type", "application/octet-stream")
+                .SetFile(localFilePath)
                 .Build();
-
-            byte[] fileData = File.ReadAllBytes(localFilePath);
-
-            request.AddParameter("file", fileData, ParameterType.RequestBody);
-
+            
             var response = await _client.ExecutePostAsync(request);
 
-            return JsonSerializer.Deserialize<FilePostResponse>(response.Content);
+            return JsonSerializer.Deserialize<FileMetaData>(response.Content);
         }
 
         public void Dispose()
