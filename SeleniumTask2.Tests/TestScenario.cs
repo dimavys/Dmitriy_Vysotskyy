@@ -3,7 +3,7 @@ using SeleniumTask2.Application.RestApiClient;
 
 namespace SeleniumTask2.Tests;
 
-public class Tests
+public class TestScenario
 {
     private RestApiClient _restClient;
 
