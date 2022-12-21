@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using RestSharp;
 using SeleniumTask2.Application.Constants;
 using static System.Net.Mime.MediaTypeNames;
@@ -21,13 +22,27 @@ namespace SeleniumTask2.Application.RequestBuilder
             return this;
         }
 
-		public RequestBuilder SetBody<T>(T body) where T : class
+        public RequestBuilder SetHeader(string key, string value)
+		{
+            _restRequest.AddHeader(key, value);
+            return this;
+        }
+
+
+        public RequestBuilder SetBody<T>(T body) where T : class
 		{
 			_restRequest.AddJsonBody(body);
             return this;
         }
 
-		public RestRequest Build()
+        public RequestBuilder SetFile(string filePath)
+		{
+            byte[] fileData = File.ReadAllBytes(filePath);
+            _restRequest.AddParameter("application/octet-stream", fileData, ParameterType.RequestBody);
+            return this;
+		}
+
+        public RestRequest Build()
 		{
 			return _restRequest;
 		}
