@@ -1,5 +1,5 @@
 ﻿using System;
-using SeleniumTask2.Application.RestApiClient;
+using SeleniumTas
 
 namespace SeleniumTask2.Tests
 {

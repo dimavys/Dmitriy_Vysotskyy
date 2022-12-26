@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
@@ -17,12 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SeleniumTask2.Application\SeleniumTask2.Application.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="files\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="files\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SeleniumTask2.Infrastructure\SeleniumTask2.Infrastructure.csproj" />
   </ItemGroup>
 </Project>
