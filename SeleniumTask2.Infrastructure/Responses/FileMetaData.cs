@@ -1,5 +1,5 @@
 ﻿using System;
-namespace SeleniumTask2.Application.Responses
+namespace SeleniumTask2.Infrastructure.Responses
 {
 	public class FileMetaData
 	{

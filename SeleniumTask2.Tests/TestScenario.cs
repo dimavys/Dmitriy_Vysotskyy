@@ -1,5 +1,5 @@
 using System.Security.Cryptography;
-using SeleniumTask2.Application.RestApiClient;
+using SeleniumTask2.Infrastructure.RestApiClient;
 
 namespace SeleniumTask2.Tests;
 

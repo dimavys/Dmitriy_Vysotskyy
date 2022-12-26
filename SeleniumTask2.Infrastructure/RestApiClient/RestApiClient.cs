@@ -2,19 +2,18 @@
 using RestSharp;
 using System.Threading;
 using System.Threading.Tasks;
-using SeleniumTask2.Application.RestApiClient.Common;
-using SeleniumTask2.Application.Constants;
-using SeleniumTask2.Application.RequestBuilder;
-using SeleniumTask2.Application.Responses;
+using SeleniumTask2.Infrastructure.Constants;
+using SeleniumTask2.Infrastructure.Responses;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Security.Principal;
 using System.IO;
 using System.Reflection.PortableExecutable;
-using SeleniumTask2.Application.Services;
+
+using SeleniumTask2.Infrastructure.Services;
 using SeleniumTask2.Infrastructure.Responses;
 
-namespace SeleniumTask2.Application.RestApiClient
+namespace SeleniumTask2.Infrastructure.RestApiClient
 {
     public class RestApiClient 
     {

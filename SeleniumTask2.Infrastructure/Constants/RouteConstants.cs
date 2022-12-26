@@ -1,5 +1,5 @@
 ﻿using System;
-namespace SeleniumTask2.Application.Constants
+namespace SeleniumTask2.Infrastructure.Constants
 {
 	public static class RouteConstants
 	{
@@ -12,7 +12,7 @@ namespace SeleniumTask2.Application.Constants
 		public static readonly string UploadFileUrl = "https://content.dropboxapi.com/2/files/upload";
 
         public static readonly string TokenType = "Bearer";
-		public static readonly string GeneratedToken = "sl.BVsvJpN4lqNo5MMfo_sDdB9K2iRYZVm7SCB-Tf_yQDil9m0tWGXDWSPqiLO_-9_eYDoZlfV059e94Z72L_Opr7bqDmnVqTOTXBbbfMacKaZtRUGqxqRMnRlscI-vY5B9oFBj5K8QjEjB";
+		public static readonly string GeneratedToken = "sl.BVuhx79-z5QOaNNRqYFjVe6Y3FwzkwDIyvvLtqozWKobfH3BwlGmrSmmgX_MigMi_5c0wtTtN7iTSsyC2uqi41ZcfFPVpNTWG-SCww6Cyxa0dOV-WyMdTufdQEDvGc7X7sPANWlPeTU9";
     }
 }
 

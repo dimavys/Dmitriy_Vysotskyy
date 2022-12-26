@@ -1,8 +1,8 @@
 ﻿using System;
 using RestSharp;
-using SeleniumTask2.Application.Constants;
+using SeleniumTask2.Infrastructure.Constants;
 
-namespace SeleniumTask2.Application.Services
+namespace SeleniumTask2.Infrastructure.Services
 {
 	public static class RequestService
 	{

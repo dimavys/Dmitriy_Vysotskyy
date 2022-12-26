@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using RestSharp;
-using SeleniumTask2.Application.Constants;
+using SeleniumTask2.Infrastructure.Constants;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace SeleniumTask2.Application.RequestBuilder
+namespace SeleniumTask2.Infrastructure.RequestBuilder
 {
 	public class RequestBuilder
 	{
