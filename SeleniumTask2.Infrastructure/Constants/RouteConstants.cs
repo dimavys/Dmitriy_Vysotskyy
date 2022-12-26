@@ -13,7 +13,7 @@ namespace SeleniumTask2.Application.Constants
 
         public static readonly string TokenType = "Bearer";
 
-		public static readonly string GeneratedToken = "sl.BVvHxIfKcWsbcVG0-NJHNIol3494Cwjsj2ISd6Yr-7GvBHPH4qsMd76irTngCQv1Cp8rsANi00wwxPJ2-nLoZ21PUT0SKWw4bxACP79tJ_iOzauDtIeYnNAeoLXoTBSgKI2lhXc3p7mH";
+		public static readonly string GeneratedToken = "sl.BVsvJpN4lqNo5MMfo_sDdB9K2iRYZVm7SCB-Tf_yQDil9m0tWGXDWSPqiLO_-9_eYDoZlfV059e94Z72L_Opr7bqDmnVqTOTXBbbfMacKaZtRUGqxqRMnRlscI-vY5B9oFBj5K8QjEjB";
     }
 }
 
