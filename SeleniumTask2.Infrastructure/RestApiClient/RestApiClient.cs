@@ -12,6 +12,7 @@ using System.Security.Principal;
 using System.IO;
 using System.Reflection.PortableExecutable;
 using SeleniumTask2.Application.Services;
+using SeleniumTask2.Infrastructure.Responses;
 
 namespace SeleniumTask2.Application.RestApiClient
 {
@@ -28,34 +29,34 @@ namespace SeleniumTask2.Application.RestApiClient
 
             };
 
-            _client.AddDefaultHeader("Authorization", RouteConstants.TokenType+ " " + RouteConstants.GeneratedToken);
+            _client.AddDefaultHeader("Authorization", RouteConstants.TokenType + " " + RouteConstants.GeneratedToken);
         }
 
-        public async Task<FileMetaData> GetFileMetadata(string filePath)
+        public async Task<RestResponse<FileMetaData>> GetFileMetadata(string filePath) 
         {
             var request = RequestService.BuildGetRequest(filePath);
                 
-            var response = await _client.ExecutePostAsync(request);
-            
-            return JsonSerializer.Deserialize<FileMetaData>(response.Content);
+            var response = await _client.ExecutePostAsync<FileMetaData>(request);
+
+            return response;
         }
 
-        public async Task<FileMetaData> DeleteFile(string filePath)
+        public async Task<RestResponse<DeleteFileMetaData>> DeleteFile(string filePath)
         {
             var request = RequestService.BuildDeleteRequest(filePath);
 
-            var response = await _client.ExecutePostAsync(request);
+            var response = await _client.ExecutePostAsync<DeleteFileMetaData>(request);
 
-            return JsonSerializer.Deserialize<FileMetaData>(response.Content);
+            return response;
         }
 
-        public async Task<FileMetaData> UploadFile(string localFilePath)
+        public async Task<RestResponse<FileMetaData>> UploadFile(string localFilePath)
         {
             var request = RequestService.BuildPostRequest(localFilePath);
 
-            var response = await _client.ExecutePostAsync(request);
+            var response = await _client.ExecutePostAsync<FileMetaData>(request);
 
-            return JsonSerializer.Deserialize<FileMetaData>(response.Content);
+            return response;
         }
 
         public void Dispose()
